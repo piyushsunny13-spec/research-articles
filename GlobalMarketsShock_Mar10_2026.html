@@ -1,0 +1,996 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Global Markets Shock — 10 March 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,600&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,300;1,8..60,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy:       #0E1F3D;
+    --navy-mid:   #1B3A6B;
+    --navy-light: #2B5299;
+    --gold:       #B8963E;
+    --gold-light: #D4AE58;
+    --crimson:    #9B1C2E;
+    --ink:        #1A1A1A;
+    --ink-mid:    #3A3A3A;
+    --ink-light:  #6B6B6B;
+    --parchment:  #F7F4EE;
+    --cream:      #FDFBF7;
+    --rule:       #C8B89A;
+    --table-head: #0E1F3D;
+    --table-alt:  #F0EDE6;
+    --sidebar-bg: #EAE6DC;
+    --green:      #1A6B3C;
+    --red:        #9B1C2E;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { font-size: 16px; scroll-behavior: smooth; }
+
+  body {
+    background: var(--parchment);
+    color: var(--ink);
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-weight: 300;
+    line-height: 1.8;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── MASTHEAD ── */
+  .masthead {
+    background: var(--navy);
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .masthead::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 39px,
+      rgba(255,255,255,0.03) 39px,
+      rgba(255,255,255,0.03) 40px
+    );
+    pointer-events: none;
+  }
+
+  .masthead-inner {
+    max-width: 1060px;
+    margin: 0 auto;
+    padding: 0 48px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .masthead-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 0;
+    border-bottom: 1px solid rgba(184,150,62,0.35);
+  }
+
+  .pub-brand {
+    font-family: 'Playfair Display', serif;
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0.18em;
+    color: var(--gold);
+    text-transform: uppercase;
+  }
+
+  .pub-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: rgba(255,255,255,0.45);
+    letter-spacing: 0.08em;
+  }
+
+  .report-type {
+    display: inline-block;
+    background: var(--crimson);
+    color: #fff;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding: 5px 14px;
+    margin: 32px 0 20px;
+  }
+
+  .masthead h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(28px, 4.2vw, 52px);
+    font-weight: 900;
+    line-height: 1.12;
+    color: #fff;
+    max-width: 820px;
+    padding-bottom: 28px;
+    border-bottom: 2px solid var(--gold);
+    margin-bottom: 28px;
+  }
+
+  .masthead h1 em {
+    color: var(--gold-light);
+    font-style: italic;
+  }
+
+  .byline-row {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    padding: 0 0 32px;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .byline-block { display: flex; flex-direction: column; gap: 4px; }
+
+  .byline-author {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: #fff;
+  }
+
+  .byline-title {
+    font-family: 'Source Serif 4', serif;
+    font-size: 13px;
+    font-weight: 300;
+    color: rgba(255,255,255,0.6);
+    font-style: italic;
+  }
+
+  .market-strip {
+    display: flex;
+    gap: 0;
+    padding-bottom: 28px;
+    flex-wrap: wrap;
+  }
+
+  .market-chip {
+    display: flex;
+    flex-direction: column;
+    padding: 10px 20px;
+    border-right: 1px solid rgba(255,255,255,0.1);
+    min-width: 120px;
+  }
+
+  .market-chip:last-child { border-right: none; }
+
+  .chip-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: rgba(255,255,255,0.4);
+    text-transform: uppercase;
+    margin-bottom: 3px;
+  }
+
+  .chip-value {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 15px;
+    font-weight: 500;
+    color: #fff;
+  }
+
+  .chip-change.up   { color: #4ADE80; font-size: 11px; }
+  .chip-change.down { color: #F87171; font-size: 11px; }
+
+  /* ── LAYOUT ── */
+  .page-wrap {
+    max-width: 1060px;
+    margin: 0 auto;
+    padding: 0 48px 80px;
+    display: grid;
+    grid-template-columns: 1fr 280px;
+    gap: 56px;
+    align-items: start;
+  }
+
+  .main-col { min-width: 0; }
+
+  /* ── EXECUTIVE SUMMARY ── */
+  .exec-summary {
+    background: var(--navy);
+    color: #fff;
+    padding: 36px 40px;
+    margin: 48px 0 0;
+    position: relative;
+  }
+
+  .exec-summary::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 4px;
+    background: var(--gold);
+  }
+
+  .exec-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 14px;
+  }
+
+  .exec-summary p {
+    font-size: 14.5px;
+    line-height: 1.75;
+    color: rgba(255,255,255,0.82);
+    font-weight: 300;
+  }
+
+  /* ── SECTIONS ── */
+  .section {
+    margin-top: 52px;
+    opacity: 0;
+    transform: translateY(22px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .section.visible { opacity: 1; transform: translateY(0); }
+
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-bottom: 20px;
+    padding-bottom: 14px;
+    border-bottom: 1.5px solid var(--rule);
+  }
+
+  .section-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--gold);
+    letter-spacing: 0.05em;
+    white-space: nowrap;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(17px, 2vw, 22px);
+    font-weight: 700;
+    color: var(--navy);
+    line-height: 1.25;
+  }
+
+  .section p {
+    font-size: 15.5px;
+    line-height: 1.82;
+    color: var(--ink-mid);
+    margin-bottom: 18px;
+    font-weight: 300;
+  }
+
+  /* ── PULL QUOTE ── */
+  .pull-quote {
+    margin: 32px 0;
+    padding: 24px 32px;
+    border-left: 3px solid var(--crimson);
+    background: var(--sidebar-bg);
+  }
+
+  .pull-quote p {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px !important;
+    font-weight: 400;
+    font-style: italic;
+    color: var(--navy) !important;
+    line-height: 1.65 !important;
+    margin-bottom: 10px !important;
+  }
+
+  .pull-quote cite {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    color: var(--ink-light);
+    font-style: normal;
+  }
+
+  /* ── DATA TABLES ── */
+  .data-table-wrap {
+    margin: 28px 0;
+    overflow-x: auto;
+  }
+
+  .data-table-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    margin-bottom: 8px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13.5px;
+  }
+
+  thead tr {
+    background: var(--table-head);
+  }
+
+  thead th {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.85);
+    padding: 12px 16px;
+    text-align: left;
+    font-weight: 500;
+  }
+
+  thead th:not(:first-child) { text-align: right; }
+
+  tbody tr:nth-child(odd)  { background: #fff; }
+  tbody tr:nth-child(even) { background: var(--table-alt); }
+
+  tbody td {
+    font-family: 'Source Serif 4', serif;
+    font-size: 13.5px;
+    font-weight: 300;
+    padding: 10px 16px;
+    color: var(--ink-mid);
+    border-bottom: 1px solid rgba(200,184,154,0.3);
+  }
+
+  tbody td:not(:first-child) {
+    text-align: right;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+  }
+
+  td.up   { color: var(--green); font-weight: 500; }
+  td.down { color: var(--red);   font-weight: 500; }
+
+  /* ── SIDEBAR ── */
+  .sidebar {
+    padding-top: 48px;
+    position: sticky;
+    top: 24px;
+  }
+
+  .sidebar-card {
+    background: var(--navy);
+    color: #fff;
+    padding: 26px;
+    margin-bottom: 24px;
+  }
+
+  .sidebar-card-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9.5px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 16px;
+  }
+
+  .sidebar-stat {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 16px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .sidebar-stat:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+  }
+
+  .stat-name {
+    font-size: 11px;
+    color: rgba(255,255,255,0.5);
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 0.06em;
+    margin-bottom: 4px;
+  }
+
+  .stat-val {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1;
+  }
+
+  .stat-change { font-size: 12px; margin-top: 3px; font-family: 'JetBrains Mono', monospace; }
+  .stat-change.up   { color: #4ADE80; }
+  .stat-change.down { color: #F87171; }
+
+  .sidebar-card.light {
+    background: var(--sidebar-bg);
+  }
+
+  .sidebar-card.light .sidebar-card-label { color: var(--crimson); }
+  .sidebar-card.light .stat-name { color: var(--ink-light); }
+  .sidebar-card.light .stat-val  { color: var(--navy); font-size: 18px; }
+
+  .scenario-block { margin-bottom: 14px; }
+  .scenario-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 4px;
+  }
+  .sidebar-card.light .scenario-label { color: var(--crimson); }
+
+  .scenario-desc {
+    font-size: 12.5px;
+    line-height: 1.6;
+    color: rgba(255,255,255,0.7);
+    font-family: 'Source Serif 4', serif;
+    font-style: italic;
+  }
+  .sidebar-card.light .scenario-desc { color: var(--ink-mid); }
+
+  /* ── SECTION DIVIDER ── */
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 48px 0 0;
+  }
+  .divider::before, .divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--rule);
+  }
+  .divider-ornament {
+    width: 6px; height: 6px;
+    background: var(--gold);
+    transform: rotate(45deg);
+  }
+
+  /* ── CONCLUSION BOX ── */
+  .conclusion-box {
+    background: var(--navy);
+    padding: 40px;
+    margin-top: 48px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .conclusion-box::before {
+    content: 'CONCLUSION';
+    position: absolute;
+    top: -10px; right: 30px;
+    font-family: 'Playfair Display', serif;
+    font-size: 96px;
+    font-weight: 900;
+    color: rgba(255,255,255,0.04);
+    line-height: 1;
+    pointer-events: none;
+  }
+
+  .conclusion-box h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--gold-light);
+    margin-bottom: 18px;
+  }
+
+  .conclusion-box p {
+    font-size: 14.5px;
+    line-height: 1.8;
+    color: rgba(255,255,255,0.78);
+    margin-bottom: 16px;
+    font-weight: 300;
+  }
+
+  /* ── SOURCES ── */
+  .sources {
+    margin-top: 48px;
+    padding-top: 20px;
+    border-top: 1px solid var(--rule);
+  }
+
+  .sources-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    margin-bottom: 10px;
+  }
+
+  .sources p {
+    font-size: 12px !important;
+    line-height: 1.7 !important;
+    color: var(--ink-light) !important;
+    font-style: italic;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--navy);
+    padding: 24px 48px;
+    text-align: center;
+    margin-top: 0;
+  }
+
+  footer p {
+    font-family: 'Source Serif 4', serif;
+    font-size: 12px;
+    color: rgba(255,255,255,0.45);
+    font-style: italic;
+    max-width: 800px;
+    margin: 0 auto;
+    line-height: 1.7;
+  }
+
+  /* ── SCENARIO OUTLOOK ── */
+  .scenarios-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin: 24px 0;
+  }
+
+  .scenario-card {
+    padding: 20px;
+    border-top: 3px solid;
+  }
+
+  .scenario-card.base   { background: var(--table-alt); border-color: var(--gold); }
+  .scenario-card.bull   { background: #E8F5EE;           border-color: var(--green); }
+  .scenario-card.bear   { background: #FBEAEA;           border-color: var(--crimson); }
+
+  .scenario-card-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .scenario-card.base .scenario-card-label   { color: #8A6F1C; }
+  .scenario-card.bull .scenario-card-label   { color: var(--green); }
+  .scenario-card.bear .scenario-card-label   { color: var(--crimson); }
+
+  .scenario-card h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 8px;
+    line-height: 1.3;
+  }
+
+  .scenario-card p {
+    font-size: 13px !important;
+    line-height: 1.65 !important;
+    color: var(--ink-mid) !important;
+    margin-bottom: 0 !important;
+  }
+
+  /* ── PRINT / RESPONSIVE ── */
+  @media (max-width: 840px) {
+    .page-wrap { grid-template-columns: 1fr; padding: 0 24px 60px; gap: 0; }
+    .masthead-inner { padding: 0 24px; }
+    .sidebar { position: static; padding-top: 16px; }
+    .scenarios-grid { grid-template-columns: 1fr; }
+    .market-strip { overflow-x: auto; flex-wrap: nowrap; }
+    footer { padding: 24px; }
+  }
+
+  @media print {
+    .section { opacity: 1; transform: none; }
+    .sidebar { position: static; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════ MASTHEAD ══════════════════ -->
+<header class="masthead">
+  <div class="masthead-inner">
+    <div class="masthead-top">
+      <span class="pub-brand">Investment Research &amp; Analysis</span>
+      <span class="pub-meta">10 MARCH 2026 &nbsp;|&nbsp; SPECIAL EDITION</span>
+    </div>
+
+    <div class="report-type">Geopolitical Risk Analysis &nbsp;·&nbsp; Global Markets</div>
+
+    <h1>Global Markets Shock: Portfolio Impact of <em>Middle East War</em> on Oil, Gold, Silver &amp; Equities</h1>
+
+    <div class="byline-row">
+      <div class="byline-block">
+        <span class="byline-author">Piyush Chugh</span>
+        <span class="byline-title">Investment Research and Performance Specialist</span>
+      </div>
+    </div>
+
+    <div class="market-strip">
+      <div class="market-chip">
+        <span class="chip-label">Brent Crude</span>
+        <span class="chip-value">$91.66</span>
+        <span class="chip-change up">▲ +50% YTD</span>
+      </div>
+      <div class="market-chip">
+        <span class="chip-label">WTI Crude</span>
+        <span class="chip-value">$89.24</span>
+        <span class="chip-change up">▲ +35.6% Wk</span>
+      </div>
+      <div class="market-chip">
+        <span class="chip-label">Spot Gold</span>
+        <span class="chip-value">$5,197</span>
+        <span class="chip-change up">▲ +2.27%</span>
+      </div>
+      <div class="market-chip">
+        <span class="chip-label">Spot Silver</span>
+        <span class="chip-value">$84.55</span>
+        <span class="chip-change down">▼ –8.4% Wk</span>
+      </div>
+      <div class="market-chip">
+        <span class="chip-label">S&amp;P 500</span>
+        <span class="chip-value">6,881</span>
+        <span class="chip-change up">▲ +0.43%</span>
+      </div>
+      <div class="market-chip">
+        <span class="chip-label">VIX</span>
+        <span class="chip-value">25.50</span>
+        <span class="chip-change down">▼ –13.5%</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ══════════════════ BODY ══════════════════ -->
+<div class="page-wrap">
+  <main class="main-col">
+
+    <!-- EXEC SUMMARY -->
+    <div class="exec-summary">
+      <div class="exec-label">Executive Summary</div>
+      <p>The joint U.S.-Israeli military campaign against Iran — Operation Epic Fury, launched 28 February 2026 — and the subsequent functional closure of the Strait of Hormuz on 9 March 2026 have triggered the most significant geopolitical supply shock to global energy markets since the 1970s oil embargo. Brent crude surged to an intraday high of $119.50/bbl before settling near $94/bbl, while WTI recorded the largest weekly percentage gain in its history at 35.6%. Gold traded at $5,196–$5,220/oz on 10 March 2026, reflecting intense safe-haven demand; silver oscillated near $84–$86/oz. Global equity markets recorded sharp intraday declines of 1.1–1.6% before staging partial recoveries, with the VIX peaking at 35.00 before retreating to 25.50. This report provides institutional-grade analysis of market dynamics, portfolio implications, and strategic allocation considerations under the current geopolitical regime.</p>
+    </div>
+
+    <!-- ═══ SECTION 1 ═══ -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-num">01</span>
+        <h2 class="section-title">Introduction: Geopolitical Escalation as Systemic Market Risk</h2>
+      </div>
+      <p>On 28 February 2026, the United States and Israel jointly launched Operation Epic Fury, a large-scale coordinated air campaign targeting nearly 900 sites across Iran, including nuclear enrichment facilities, missile production infrastructure, air defense networks, and military command nodes. The operation followed months of diplomatic stalemate over Iran's advanced uranium enrichment program and a succession of Iranian-backed proxy attacks on U.S. and Israeli regional interests. The death of Iranian Supreme Leader Ayatollah Ali Khamenei in the opening strikes, confirmed in early March, elevated the conflict from a targeted military engagement to a full-spectrum geopolitical upheaval with deeply uncertain succession dynamics within the Islamic Republic.</p>
+      <p>By 9 March 2026, the operational escalation had produced its most consequential economic consequence: the functional closure of the Strait of Hormuz. This narrow 21-mile maritime chokepoint between Oman and Iran serves as the world's single most critical oil transit corridor. Approximately 20–21 million barrels per day (bpd) of crude oil, condensate, and petroleum products — representing approximately 20% of total global oil consumption — transit the Strait daily. Iran's deployment of anti-ship missiles, sea mines, and drone swarms, combined with targeted attacks on tanker navigation systems, has rendered safe passage commercially non-viable without active military escort.</p>
+      <p>The systemic risk to global financial markets transmits through four primary channels: direct inflation from energy cost increases; secondary pass-through inflation across logistics and manufacturing supply chains; monetary policy uncertainty as central banks face stagflationary impulses; and sentiment-driven risk-off repricing across asset classes. The EIA, in its 10 March 2026 Short-Term Energy Outlook, confirmed that the effective closure of the Strait has materially disrupted petroleum shipments and forced production shut-ins across Gulf states, including Iraq and Kuwait, where force majeure declarations have been issued.</p>
+
+      <div class="pull-quote">
+        <p>"In equities, the impact of a risk and growth shock is clearly negative, but only a severe and sustained oil price disruption would have large effects on the global growth picture."</p>
+        <cite>— Goldman Sachs Strategist Dominic Wilson, March 2026</cite>
+      </div>
+    </div>
+
+    <!-- ═══ SECTION 2 ═══ -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-num">02</span>
+        <h2 class="section-title">Oil Market Disruption: Price Shock and Supply Chain Fragility</h2>
+      </div>
+      <p>The crude oil market has experienced its most acute supply shock in over three decades. Prior to the conflict, both the EIA and major institutional forecasters — including J.P. Morgan — projected a structurally oversupplied market for 2026, with Brent expected to average in the $58–$65/bbl range, driven by OPEC+ production increases, record U.S. output of 13.6 million bpd, and moderate global demand growth of approximately 930 thousand barrels per day. That baseline is now obsolete.</p>
+      <p>The Strait of Hormuz closure has produced an immediate and violent price dislocation. On 9 March 2026, Brent crude touched an intraday high of $119.50/bbl, settling at $94/bbl — up approximately 50% from the 1 January opening price — the highest settlement since September 2023. WTI posted its largest weekly gain in recorded market history at 35.6%, with a 52-week range now spanning from $54.98 to $119.43/bbl. By the morning session of 10 March, crude pared losses toward $84–$92/bbl as President Trump signaled a potential diplomatic conclusion, only to recover toward $90/bbl as Iran denied ceasefire interest.</p>
+
+      <div class="data-table-wrap">
+        <div class="data-table-label">Exhibit 1 — Crude Oil Benchmark Pricing: Feb 28 – Mar 10, 2026</div>
+        <table>
+          <thead>
+            <tr>
+              <th>Benchmark</th>
+              <th>Pre-Conflict (Jan 1)</th>
+              <th>Intraday Peak (Mar 9)</th>
+              <th>Settlement (Mar 9)</th>
+              <th>Mar 10 Range</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Brent Crude ($/bbl)</td><td>$62.50</td><td class="up">$119.50</td><td>$94.00</td><td>$86.72 – $91.66</td></tr>
+            <tr><td>WTI Crude ($/bbl)</td><td>$61.87</td><td class="up">$119.43</td><td>$89.24</td><td>$79.73 – $91.48</td></tr>
+            <tr><td>WTI Weekly % Change</td><td>—</td><td>—</td><td class="up">+35.6% (record)</td><td>Highly volatile</td></tr>
+            <tr><td>Brent YTD Change</td><td>—</td><td>—</td><td class="up">+50.4%</td><td>Partially retraced</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>The supply disruption extends beyond transit risk alone. Iraq, whose southern Basra export terminal routes oil through Gulf shipping lanes, and Kuwait have both declared force majeure as storage capacity reaches saturation without export relief. Saudi Aramco, while geographically insulated from direct military action, faces operational uncertainty as the broader Gulf security architecture is compromised. The IEA has proposed the largest emergency release of strategic petroleum reserves in its history to partially offset supply disruptions — a coordinated mechanism across IEA member states that contributed to the intraday crude pullback observed on 10 March. The EIA's updated forecast projects Brent declining from $95/bbl toward $80/bbl by Q3 2026 and approximately $70/bbl by year-end, contingent on a progressive easing of Strait transit restrictions.</p>
+    </div>
+
+    <!-- ═══ SECTION 3 ═══ -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-num">03</span>
+        <h2 class="section-title">Precious Metals: Safe-Haven Demand and Inflation Hedge Dynamics</h2>
+      </div>
+      <p>Gold's price behavior during this episode reflects the complex interplay between traditional safe-haven demand, U.S. dollar dynamics, and competing risk-off impulses. Spot gold opened March near $5,146/oz, having already established a record high of $5,594.82/oz on 29 January 2026 — a level driven by central bank accumulation, ETF inflows, and persistent geopolitical uncertainty. The conflict's outbreak on 28 February triggered renewed safe-haven inflows, driving gold to challenge the $5,420 level in early March before a sharp 4.66% single-session correction on 3 March — attributable to forced liquidation, a surging U.S. Dollar Index, and profit-taking by investors who had accumulated positions through January's rally. By 10 March 2026, spot gold trades at approximately $5,196–$5,220/oz.</p>
+
+      <div class="data-table-wrap">
+        <div class="data-table-label">Exhibit 2 — Precious Metals Snapshot: 10 March 2026</div>
+        <table>
+          <thead>
+            <tr>
+              <th>Asset</th>
+              <th>Pre-Conflict (Jan 1)</th>
+              <th>Record Peak</th>
+              <th>Mar 10 Price</th>
+              <th>YTD Performance</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Spot Gold (XAU/USD)</td><td>~$4,260/oz</td><td class="up">$5,594.82 (Jan 29)</td><td>~$5,197/oz</td><td class="up">+22%</td></tr>
+            <tr><td>Gold Futures (Apr 2026)</td><td>—</td><td>—</td><td>$5,177.60</td><td class="up">Near par with spot</td></tr>
+            <tr><td>Spot Silver (XAG/USD)</td><td>~$28.50/oz</td><td class="up">$92.68 (late Feb)</td><td>~$84–$86/oz</td><td class="up">Significantly elevated</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>Silver has exhibited characteristically higher beta behavior relative to gold, consistent with its dual role as both an inflation hedge and an industrial commodity. From a recent peak near $92.68, silver declined sharply — falling over 8% in the session of 4 March — before recovering 4.5% on 5 March and stabilizing near $84–$86/oz through 10 March. Silver's industrial demand component, particularly its critical application in solar photovoltaic manufacturing and electric vehicle battery systems, introduces demand-side vulnerability if the conflict materially slows global economic activity.</p>
+      <p>BNP Paribas raised its average 2026 gold price forecast by 27% to $5,620/oz in early March, with a peak above $6,250 projected by year-end under a sustained conflict scenario. The World Gold Council data indicates central bank gold demand declined 82% in January 2026, a development that had moderated bullion's upward momentum prior to the conflict. Current safe-haven purchases are being partially offset by profit-taking as investors assess whether the conflict will prove time-bounded — analogous to gold's behavior following the 2022 Russia-Ukraine invasion, when the initial rally reversed within weeks as the market reached a new equilibrium.</p>
+
+      <div class="pull-quote">
+        <p>"The macro-fundamental factors remain broadly supportive of gold. Certainly, as long as the war with Iran is ongoing, that's going to remain supportive as well."</p>
+        <cite>— Peter Grant, VP &amp; Senior Metals Strategist, Zaner Metals</cite>
+      </div>
+    </div>
+
+    <!-- ═══ SECTION 4 ═══ -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-num">04</span>
+        <h2 class="section-title">Equity Market Volatility: Sector Divergence and Index Dynamics</h2>
+      </div>
+      <p>Global equity markets have experienced significant, though not catastrophic, drawdowns since the conflict onset. The market's relative resilience reflects several structural factors: the S&P 500's heavy concentration in mega-cap technology companies whose earnings are less directly correlated with oil prices; pre-existing investor expectation of U.S. military engagement with Iran, limiting the shock surprise coefficient; and strong underlying earnings momentum — S&P 500 constituent earnings growth of 14.2% in recent quarters.</p>
+      <p>On 2 March — the first full trading day following the 28 February strikes — the Dow Jones Industrial Average fell 543 points (1.1%), the S&P 500 declined 1.1%, and the Nasdaq Composite fell 1.6% at the open before a significant intraday recovery. The S&P 500 closed essentially flat at 6,881.62 (+0.04%), while the Nasdaq recovered to close +0.36% at 22,748.86 as investors rotated into mega-cap technology names viewed as geopolitically insulated. By 10 March, the CBOE Volatility Index (VIX) declined 13.5% to 25.50, retreating from the 9 March peak of 35.00 as diplomatic signals partially normalised near-term risk pricing.</p>
+
+      <div class="data-table-wrap">
+        <div class="data-table-label">Exhibit 3 — Global Equity Index Performance: Conflict Period</div>
+        <table>
+          <thead>
+            <tr>
+              <th>Index / Market</th>
+              <th>Pre-War Level</th>
+              <th>Mar 9 Intraday Low</th>
+              <th>Mar 10 Move</th>
+              <th>Assessment</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>S&amp;P 500 (U.S.)</td><td>~6,960</td><td>~6,770</td><td class="up">+0.43%</td><td>Resilient; AI/Tech cushion</td></tr>
+            <tr><td>Nasdaq Composite</td><td>~23,100</td><td>~22,625</td><td class="up">+0.65%</td><td>Recovery led by mega-cap</td></tr>
+            <tr><td>Dow Jones Industrials</td><td>~49,450</td><td>~48,300</td><td class="up">+0.59%</td><td>Energy/Defense offsetting</td></tr>
+            <tr><td>FTSE 100 (UK)</td><td>~8,800</td><td>~8,689</td><td class="down">–1.24% (week)</td><td>Energy import exposure</td></tr>
+            <tr><td>DAX (Germany)</td><td>~22,200</td><td>~21,987</td><td class="down">–0.94% (week)</td><td>Industrial cost pressures</td></tr>
+            <tr><td>ASX 200 (Australia)</td><td>~8,600</td><td>~8,289</td><td class="down">–3.6% (week)</td><td>Commodity hedge partially offset</td></tr>
+            <tr><td>BSE Sensex (India)</td><td>~79,000</td><td>~76,750</td><td class="down">–2.85% (week)</td><td>Energy import cost shock</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>Sector-level performance has been sharply bifurcated. Energy equities — ExxonMobil, Chevron — initially gained 1–2% as crude surged, though gains have moderated as conflict resolution prospects have tempered the oil price premium. Defense sector stocks outperformed materially during the escalation phase as expanded defense budget authorizations gained credibility. Conversely, airlines and travel names have been severely impacted: Delta Air Lines and United Airlines saw multi-week losses before rebounding 3%+ on 10 March following Trump's de-escalation remarks. The PHLX Semiconductor Index fell sharply during peak escalation before recovering nearly 4% on 9 March, while application software sub-sectors within technology are down approximately 25% year-to-date on a combination of AI-sector rationalisation concerns and geopolitical risk repricing.</p>
+    </div>
+
+    <!-- ═══ SECTION 5 ═══ -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-num">05</span>
+        <h2 class="section-title">Portfolio Allocation Impact: Institutional Repositioning</h2>
+      </div>
+      <p>The geopolitical shock has triggered significant asset allocation reassessment among institutional portfolio managers. The primary directional shifts observed across institutional trading desks in the first two weeks of March are consistent with textbook risk-off regime responses, though the magnitude and speed of reallocation have been moderated by pre-positioning and the relatively contained equity drawdown.</p>
+      <p>Commodity allocation has expanded meaningfully, with crude oil futures and energy sector ETFs attracting substantial inflows in the initial escalation phase. However, extreme intraday volatility — WTI swinging over $15/bbl within single sessions — has complicated position sizing and leverage management for commodity-focused funds. Precious metals have attracted incremental allocation as portfolio hedges, though the 4.66% single-session gold correction demonstrated that even safe-haven assets are not immune to liquidation pressure when correlation structures break down and margin calls cascade.</p>
+      <p>U.S. Treasury dynamics have been atypical in this crisis. Rather than declining sharply as would be expected in a conventional risk-off scenario, the 10-year yield has eased only moderately to approximately 4.117% on 10 March. This reflects investor concern that elevated U.S. defense expenditure — against a backdrop of record national debt — will increase Treasury supply, and that energy-driven inflation will constrain the Fed's ability to ease. The U.S. Dollar Index has served as a more reliable safe-haven vehicle, rising sharply before partially retracing to 98.66 by 10 March as de-escalation signals emerged.</p>
+      <p>Defensive equity rotation has been evident within equity portfolios, with consumer staples, healthcare, and utilities outperforming cyclicals during peak volatility. The Carson Group's analysis of 40 major geopolitical events over 85 years demonstrates that the S&P 500 historically declines 0.9% in the first month following a shock but recovers 3.4% over the subsequent six months — a base case that institutional strategists are referencing as context for current positioning decisions.</p>
+    </div>
+
+    <!-- ═══ SECTION 6 ═══ -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-num">06</span>
+        <h2 class="section-title">Macroeconomic Implications: Inflation, Central Banks &amp; Growth</h2>
+      </div>
+      <p>The macroeconomic transmission of an oil price shock of this magnitude is well-documented. Every $10/bbl sustained increase in crude prices adds approximately 0.3–0.5 percentage points to headline CPI in major advanced economies over a 3–6 month lag. With Brent having risen approximately $30–$55/bbl from year-start levels, the inflationary impulse is significant — though the duration of the shock remains the critical variable. The EIA projects Brent declining toward $80/bbl by Q3 2026 and approximately $70/bbl by year-end, implying that the inflation impulse may prove transitory if the Strait reopens and production resumes within a 4–8 week timeline.</p>
+      <p>The Federal Reserve faces a particularly challenging policy environment. Prior to the conflict, consensus expectations had stabilized around one to two rate cuts in H2 2026, with U.S. CPI at approximately 2.4% annualized. The energy price shock materially complicates this trajectory. The CME FedWatch tool shows investors widely expecting rates to remain on hold at the 18 March FOMC meeting. A sustained $95–$110/bbl oil environment would likely delay any easing cycle and could necessitate a resumption of the restrictive policy stance if core inflation re-accelerates. The European Central Bank faces analogous constraints given Europe's greater dependence on Middle Eastern LNG imports, with European natural gas prices responding to disrupted flows through the Strait.</p>
+      <p>Currency markets reflect the classic hierarchy of safe-haven demand. The U.S. Dollar Index rose over 1% in the immediate escalation days before partially retracing to 98.67 by 10 March as diplomatic signals moderated risk premia. The EUR/USD pair extended gains to 1.1645 by 10 March. Japanese yen and Swiss franc attracted capital flows as traditional safe-haven instruments. Emerging market currencies with current account vulnerabilities — particularly energy-importing economies across South and Southeast Asia — have depreciated against the dollar, amplifying domestic inflationary pressures and complicating central bank policy decisions in those jurisdictions.</p>
+
+      <div class="pull-quote">
+        <p>Historically, geopolitical shocks of this nature follow a V-shaped market recovery once the scope of the conflict becomes understood and bounded. However, the 2026 episode is distinctive given the direct U.S. military engagement, the Strait of Hormuz closure, and the uncertainty surrounding Iran's post-Khamenei political succession.</p>
+      </div>
+    </div>
+
+    <!-- ═══ SECTION 7 ═══ -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-num">07</span>
+        <h2 class="section-title">Investor Strategy Outlook: Near-Term and Medium-Term Positioning</h2>
+      </div>
+      <p>In the near term (0–4 weeks), the dominant market variable is the duration and geographic scope of the Strait of Hormuz closure. Institutional strategy should be calibrated to three discrete scenarios:</p>
+
+      <div class="scenarios-grid">
+        <div class="scenario-card bull">
+          <div class="scenario-card-label">Scenario A — Rapid Resolution</div>
+          <h4>Diplomatic Settlement within 2–4 Weeks</h4>
+          <p>Crude retreats toward $70–$75/bbl; equity markets recover 3–5%; gold retraces toward $4,900–$5,100/oz. VIX normalises below 18.</p>
+        </div>
+        <div class="scenario-card base">
+          <div class="scenario-card-label">Scenario B — Base Case</div>
+          <h4>Contained Conflict, Partial Reopening</h4>
+          <p>Oil sustained at $80–$95/bbl range over 4–8 weeks; VIX 20–28; inflation uptick 0.3–0.5pp; Fed on hold through H1 2026.</p>
+        </div>
+        <div class="scenario-card bear">
+          <div class="scenario-card-label">Scenario C — Protracted Conflict</div>
+          <h4>Sustained Hormuz Disruption 3+ Months</h4>
+          <p>Brent at $110–$130/bbl; global GDP compressed by 0.8–1.2pp; gold toward $6,250+; equity indices –8% to –15% from highs.</p>
+        </div>
+      </div>
+
+      <p>Within equity portfolios, the near-term tactical framework supports incremental additions to integrated energy majors and defense sector names — which historically outperform during sustained geopolitical risk premiums — while maintaining selective exposure to mega-cap technology companies with strong balance sheets and AI-driven earnings visibility insulated from energy cost pressures. Airlines, cruise lines, and consumer discretionary names levered to discretionary travel and goods spending should be underweighted until fuel cost clarity emerges. For emerging market allocations, reducing exposure to energy-importing economies — India, South Korea, Turkey — while rotating toward commodity-exporting sovereigns represents a prudent near-term adjustment.</p>
+      <p>In the medium term (1–6 months), the structural shift in global energy security architecture that this conflict has accelerated will create durable investment themes: defense technology, domestic energy infrastructure, LNG liquefaction and regasification capacity outside the Persian Gulf, and strategic minerals supply chains represent multi-year secular opportunities regardless of the conflict's immediate resolution. The Wells Fargo base case for S&P 500 at 7,500 by year-end 2026 remains intact under a scenario of conflict resolution within 1–2 months, though that target will be revised materially downward if the Hormuz disruption persists through Q2 2026.</p>
+      <p>Precious metals allocation should be maintained or modestly increased as portfolio insurance, with gold targeted at 5–10% of overall portfolio weighting for conservative mandates and up to 15–20% for portfolios with explicit crisis protection mandates. Fixed income positioning should favour shorter durations given the risk of inflation re-acceleration; TIPS and commodity-linked inflation-protection instruments provide effective hedges against the stagflationary tail risk.</p>
+    </div>
+
+    <!-- ═══ CONCLUSION ═══ -->
+    <div class="section">
+      <div class="conclusion-box">
+        <h3>8. Conclusion: Risk Assessment &amp; Portfolio Implications</h3>
+        <p>The joint U.S.-Israeli military campaign against Iran and the functional closure of the Strait of Hormuz constitute a systemic geopolitical shock with direct, material implications for global energy markets, inflation trajectories, central bank policy, and asset allocation frameworks. The scale of the supply disruption — affecting up to 20 million bpd of global oil transit — is without precedent in the post-1970s era and has compressed the conventional geopolitical risk pricing timeline from months to days.</p>
+        <p>Brent crude's surge to $119.50/bbl and subsequent settlement near $94/bbl reflects the market's initial attempt to price a tail risk that many institutional models had assigned a low probability. Gold's consolidation near $5,200/oz validates its continued role as the primary safe-haven asset under kinetic geopolitical stress, notwithstanding the short-term volatility introduced by dollar strength and forced liquidation dynamics. Equity markets have demonstrated a degree of resilience attributable to AI-sector structural earnings momentum, historical precedent of geopolitical shock recovery, and the expectation of a time-bounded conflict.</p>
+        <p>The critical risk variable for portfolio managers is the duration of the Hormuz closure and the political succession dynamics within the post-Khamenei Iranian government. Every additional month of closure compounds the inflationary impulse, increases the risk of a central bank policy error, and deepens the impact on emerging market current accounts and growth trajectories. Institutional portfolios should maintain dynamic flexibility in commodity, fixed income, and currency hedges; ensure adequate liquidity buffers of 5–8%; and resist both the temptation to over-hedge and the complacency of assuming a swift resolution that the diplomatic and operational realities may not support. The events of March 2026 will remain a benchmark case study in the integration of geopolitical risk into institutional portfolio construction for years to come.</p>
+      </div>
+    </div>
+
+    <!-- SOURCES -->
+    <div class="sources section">
+      <div class="sources-label">Data Sources &amp; References</div>
+      <p>U.S. Energy Information Administration (EIA) Short-Term Energy Outlook, March 10, 2026; Reuters Market Data; Bloomberg Markets; CNBC Markets Live; Charles Schwab Market Update, March 10, 2026; The Street Markets Live Blog, March 10, 2026; FinancialContent / MarketMinute, March 10, 2026; The National (UAE) Markets Coverage; GoldDealer.com Precious Metals Commentary; LiteFinance Gold Forecast; Mining Weekly; CME Group FedWatch Tool; Carson Group Geopolitical Event Analysis; BNP Paribas Commodity Research; World Gold Council Monthly Data Release; Wells Fargo Investment Institute Equity Outlook.</p>
+    </div>
+
+  </main><!-- /main-col -->
+
+  <!-- ══════ SIDEBAR ══════ -->
+  <aside class="sidebar">
+
+    <div class="sidebar-card">
+      <div class="sidebar-card-label">Key Market Levels — 10 Mar 2026</div>
+
+      <div class="sidebar-stat">
+        <span class="stat-name">BRENT CRUDE</span>
+        <span class="stat-val">$91.66</span>
+        <span class="stat-change up">▲ +50% YTD · Peak $119.50</span>
+      </div>
+      <div class="sidebar-stat">
+        <span class="stat-name">WTI CRUDE</span>
+        <span class="stat-val">$89.24</span>
+        <span class="stat-change up">▲ Wk record +35.6%</span>
+      </div>
+      <div class="sidebar-stat">
+        <span class="stat-name">SPOT GOLD</span>
+        <span class="stat-val">$5,197</span>
+        <span class="stat-change up">▲ +2.27% · 2026 High: $5,595</span>
+      </div>
+      <div class="sidebar-stat">
+        <span class="stat-name">SPOT SILVER</span>
+        <span class="stat-val">$84.55</span>
+        <span class="stat-change down">▼ –8.4% week · High: $92.68</span>
+      </div>
+      <div class="sidebar-stat">
+        <span class="stat-name">VIX</span>
+        <span class="stat-val">25.50</span>
+        <span class="stat-change down">▼ –13.5% · Peak: 35.00</span>
+      </div>
+      <div class="sidebar-stat">
+        <span class="stat-name">10Y US TREASURY YIELD</span>
+        <span class="stat-val">4.117%</span>
+        <span class="stat-change">Marginally eased</span>
+      </div>
+      <div class="sidebar-stat">
+        <span class="stat-name">US DOLLAR INDEX (DXY)</span>
+        <span class="stat-val">98.67</span>
+        <span class="stat-change down">▼ Partial retracement</span>
+      </div>
+    </div>
+
+    <div class="sidebar-card light">
+      <div class="sidebar-card-label">Scenario Outlook — Brent Crude</div>
+
+      <div class="scenario-block">
+        <div class="scenario-label">Bull (Resolution)</div>
+        <div class="scenario-desc">$70–$75/bbl if Strait reopens within 2–4 weeks</div>
+      </div>
+      <div class="scenario-block">
+        <div class="scenario-label">Base Case</div>
+        <div class="scenario-desc">$80–$95/bbl sustained through Q2 2026</div>
+      </div>
+      <div class="scenario-block">
+        <div class="scenario-label">Bear (Protracted)</div>
+        <div class="scenario-desc">$110–$130/bbl if closure extends beyond Q2</div>
+      </div>
+    </div>
+
+    <div class="sidebar-card light">
+      <div class="sidebar-card-label">Gold Price Forecasts (2026)</div>
+
+      <div class="sidebar-stat">
+        <span class="stat-name">BNP PARIBAS AVG FORECAST</span>
+        <span class="stat-val">$5,620</span>
+        <span class="stat-change up">▲ Raised +27%</span>
+      </div>
+      <div class="sidebar-stat">
+        <span class="stat-name">BNP PEAK TARGET</span>
+        <span class="stat-val">$6,250+</span>
+        <span class="stat-change">Under sustained conflict</span>
+      </div>
+      <div class="sidebar-stat">
+        <span class="stat-name">2026 HIGH (29 Jan)</span>
+        <span class="stat-val">$5,594</span>
+        <span class="stat-change">All-time record</span>
+      </div>
+    </div>
+
+    <div class="sidebar-card">
+      <div class="sidebar-card-label">Recommended Allocation Tilts</div>
+      <div class="sidebar-stat">
+        <span class="stat-name">GOLD WEIGHTING</span>
+        <span class="stat-val" style="font-size:18px;">5–20%</span>
+        <span class="stat-change" style="color:rgba(255,255,255,0.5);">Conservative → Crisis hedge</span>
+      </div>
+      <div class="sidebar-stat">
+        <span class="stat-name">CASH BUFFER</span>
+        <span class="stat-val" style="font-size:18px;">5–8%</span>
+        <span class="stat-change" style="color:rgba(255,255,255,0.5);">Increased from 2–3% norm</span>
+      </div>
+      <div class="sidebar-stat">
+        <span class="stat-name">DURATION</span>
+        <span class="stat-val" style="font-size:18px;">Short</span>
+        <span class="stat-change" style="color:rgba(255,255,255,0.5);">Favour TIPS over nominals</span>
+      </div>
+      <div class="sidebar-stat">
+        <span class="stat-name">EM EQUITIES</span>
+        <span class="stat-val" style="font-size:18px;">Underweight</span>
+        <span class="stat-change" style="color:#F87171;">Energy importers esp. at risk</span>
+      </div>
+    </div>
+
+  </aside>
+</div><!-- /page-wrap -->
+
+<!-- ══════════════════ FOOTER ══════════════════ -->
+<footer>
+  <p>This information is for educational purposes only and should not be considered investment advice. All market data referenced herein reflects publicly available information as of 10 March 2026. Past performance of asset classes is not indicative of future results. This report does not constitute a solicitation or offer to buy or sell any financial instrument.</p>
+</footer>
+
+<script>
+  // Intersection Observer for section animations
+  const sections = document.querySelectorAll('.section');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 60);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.06 });
+
+  sections.forEach(s => observer.observe(s));
+</script>
+</body>
+</html>
